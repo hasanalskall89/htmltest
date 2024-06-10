@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crypto Vesting Charts</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/themes/dark-unica.js"></script>
+    <style>
+        body {
+            background-color: #2a2a2b;
+            color: #E0E0E3;
+            font-family: Arial, sans-serif;
+        }
+        .chart-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        #pieChartContainer, #lineChartContainer {
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <div id="pieChartContainer"></div>
+    </div>
+    <div class="chart-container">
+        <div id="lineChartContainer"></div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Highcharts.setOptions({
+                credits: {
+                    enabled: false
+                }
+            });
+
+            // Pie Chart for Crypto Vesting Allocation
+            Highcharts.chart('pieChartContainer', {
+                chart: {
+                    type: 'pie'
+                },
+                title: {
+                    text: 'Crypto Vesting Allocation'
+                },
+                exporting: {
+                    enabled: false
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                accessibility: {
+                    point: {
+                        valueSuffix: '%'
+                    }
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            style: {
+                                color: 'white'
+                            }
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Allocation',
+                    colorByPoint: true,
+                    data: [
+                        { name: 'LP Staking', y: 50 },
+                        { name: 'Staking', y: 5 },
+                        { name: 'IP Platform', y: 20 },
+                        { name: 'Team', y: 17 },
+                        { name: 'Advisors', y: 3 },
+                        { name: 'Sale', y: 5 },
+                        { name: 'Referral', y: 5 }
+                    ]
+                }]
+            });
+
+            // Line Chart for Vesting Schedule
+            Highcharts.chart('lineChartContainer', {
+                chart: {
+                    type: 'line'
+                },
+                title: {
+                    text: 'Crypto Vesting Schedule'
+                },
+                exporting: {
+                    enabled: false
+                },
+                xAxis: {
+                    categories: Array.from({length: 120}, (_, i) => `Month ${i+1}`)
+                },
+                yAxis: {
+                    title: {
+                        text: 'Tokens Released'
+                    }
+                },
+                series: [{
+                    name: 'LP Staking',
+                    data: Array.from({length: 120}, (_, i) => (i+1) * (10500000000 / 120))
+                }, {
+                    name: 'IP Platform',
+                    data: Array.from({length: 60}, (_, i) => (i+1) * (4200000000 / 60))
+                }, {
+                    name: 'Team',
+                    data: Array.from({length: 60}, (_, i) => (i+1) * (3570000000 / 60))
+                }, {
+                    name: 'Advisors',
+                    data: Array.from({length: 24}, (_, i) => (i+1) * (630000000 / 24)).concat(Array(96).fill(null))
+                }]
+            });
+        });
+    </script>
+</body>
+</html>
+
